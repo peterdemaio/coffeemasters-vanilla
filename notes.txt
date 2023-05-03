@@ -1,0 +1,84 @@
+Each DOMelement has list of possible events:
+
+basic: load, click, dblclick
+
+value: change
+
+keyboard events: keyup, keydown, keypress
+
+mouse events: mouseover, mouseout, etc
+
+pointer and touch events
+
+
+// Examples of ways to make things more succinctly, for example, use .on instead of addEventListener
+const $ = () => document.querySelector.call(this, arguments);
+const $$ = () => document.querySelectorAll.call(this, arguments);
+HTMLElement.prototype.on = (a, b, c) => this.addEventListener(a, b, c);
+HTMLElement.prototype.off = (a, b) => this.removeEventListener(a, b);
+HTMLElement.prototype.$ = (s) => this.querySelector(s);
+HTMLElement.prototype.$ = (s) => this.querySelectorAll(s);
+
+
+// pushing a new URL; the second argument is unused
+
+history.pushState(optional_state, null, "/new-url");
+
+// to listen for changes in URL within the same page navigation
+
+window.addEventListener("popstate", event => {
+    let url = location.href;
+})
+
+//how to create a custom element in pure javascript
+class MyElement extends HTMLElement {
+    constructor() {
+        super();
+        this.dataset.language
+    }
+    // lifecycle
+    connectedCallback(){};
+    disconnectedCallback(){};
+    adoptedCallback(){};
+
+    attributeChangedCallback(name, oldValue, newValue){}
+}
+
+customElements.define("my-element, MyElement);
+
+//html tag must have a hyphen to be future proof
+
+customized builtins (not available in Savari): 
+
+<div is="my-element>
+
+</div>
+
+as opposed to:
+
+<my-element></my-element>
+
+
+Shadow Dom: (solves the issue of css being applied to entire doc, not just that template)
+
+classs MyElement extends HTMLElement {
+    constructor() {
+        super();
+        this.root = this.attachShadow({node: open})
+    }
+}
+
+Where to define HTML for a custom element: 
+    - use DOM APIs
+    - use a <template> in the main html
+    - Use an external HTML file loaded with fetch (it can be preloaded!)
+    - using innerHTML
+    - using DOMParser
+
+Where to define CSS for a custom element:
+    - use CSSOM APIs
+    - add a <script> to a <template>
+    - add a <link>
+    - Use an external CSS file loaded with
+fetch (it can be prefetched) and injected
+in the Shadow DOM as a <style>
